@@ -10,7 +10,7 @@
         <table class="table table-hover">
           <thead>
             <tr>
-              <th scope="col">Title</th>
+              <th scope="col">Titlee</th>
               <th scope="col">Author</th>
               <th scope="col">Read?</th>
               <th></th>
@@ -164,7 +164,7 @@ export default {
       axios.post(path, payload)
         .then(() => {
           this.getBooks();
-          this.message = 'Books added!';
+          this.message = 'Book added!';
           this.showMessage = true;
         })
         .catch((error) => {
@@ -220,7 +220,7 @@ export default {
       axios.put(path, payload)
         .then(() => {
           this.getBooks();
-          this.message = 'Books updated!';
+          this.message = 'Book updated!';
           this.showMessage = true;
         })
         .catch((error) => {
