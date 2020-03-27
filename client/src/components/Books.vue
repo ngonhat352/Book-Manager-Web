@@ -10,7 +10,7 @@
         <table class="table table-hover">
           <thead>
             <tr>
-              <th scope="col">Titlee</th>
+              <th scope="col">Title</th>
               <th scope="col">Author</th>
               <th scope="col">Read?</th>
               <th></th>
