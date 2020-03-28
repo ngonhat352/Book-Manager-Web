@@ -22,7 +22,8 @@
               <td>{{ book.author }}</td>
               <td>
                 <input type="number" class="form-group form-control w-75"
-                       v-model="book.read">
+                       v-model="book.read"
+                       v-on:keyup.enter="updatePages(book)">
                 </td>
                 <!-- <span v-if="book.read">Yes</span>
                 <span v-else>No</span> -->
@@ -170,7 +171,7 @@ export default {
   },
   methods: {
     getBooks() {
-      const path = '/books';
+      const path = 'http://localhost:5000/books';
       axios.get(path)
         .then((res) => {
           this.books = res.data.books;
@@ -181,7 +182,7 @@ export default {
         });
     },
     addBook(payload) {
-      const path = '/books';
+      const path = 'http://localhost:5000/books';
       axios.post(path, payload)
         .then(() => {
           this.getBooks();
@@ -237,7 +238,7 @@ export default {
       this.updateBook(payload, this.editForm.id);
     },
     updateBook(payload, bookID) {
-      const path = `/books/${bookID}`;
+      const path = `http://localhost:5000/books/${bookID}`;
       axios.put(path, payload)
         .then(() => {
           this.getBooks();
@@ -257,7 +258,7 @@ export default {
       this.getBooks(); // why?
     },
     removeBook(bookID) {
-      const path = `/books/${bookID}`;
+      const path = `http://localhost:5000/books/${bookID}`;
       axios.delete(path)
         .then(() => {
           this.getBooks();
@@ -272,6 +273,16 @@ export default {
     },
     onDeleteBook(book) {
       this.removeBook(book.id);
+    },
+    updatePages(book) {
+      this.editBook(book);
+      // console.log('aaaaaaaaa');
+      const payload = {
+        title: this.editForm.title,
+        author: this.editForm.author,
+        read: this.editForm.read,
+      };
+      this.updateBook(payload, this.editForm.id);
     },
   },
   created() {

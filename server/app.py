@@ -73,7 +73,7 @@ def single_book(book_id):
     if request.method == 'PUT':
         post_data = request.get_json()
         remove_book(book_id)
-        BOOKS.append({
+        BOOKS.insert(0,{
             'id': uuid.uuid4().hex,
             'title': post_data.get('title'),
             'author': post_data.get('author'),
