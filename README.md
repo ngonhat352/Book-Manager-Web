@@ -1,6 +1,10 @@
 # Book Manager
 An online bookmark website using Flask and Vue. Inspired by an online tutorial
 
+**Visit at**
+http://lit-springs-09878.herokuapp.com/
+
+
 **Future features and next steps:**
 - Change the project system strcture using SQLite so that there will be users and dictionaries of books 
 - Pages read input field will update the pages read when user hits Enter after typing in
