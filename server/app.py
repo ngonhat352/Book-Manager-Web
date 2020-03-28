@@ -72,17 +72,17 @@ def single_book(book_id):
     response_object = {'status': 'success'}
     if request.method == 'PUT':
         post_data = request.get_json()
-        remove_book(book_id)
-        BOOKS.insert(0,{
-            'id': uuid.uuid4().hex,
-            'title': post_data.get('title'),
-            'author': post_data.get('author'),
-            'read': post_data.get('read')
-        })
-        response_object['message'] = 'Book updated!'
+        if (remove_book(book_id)):
+            BOOKS.insert(0,{
+                'id': uuid.uuid4().hex,
+                'title': post_data.get('title'),
+                'author': post_data.get('author'),
+                'read': post_data.get('read')
+            })
+            response_object['message'] = 'Book updated!'
     if request.method == 'DELETE':
-        remove_book(book_id)
-        response_object['message'] = 'Book removed!'
+        if (remove_book(book_id)):
+            response_object['message'] = 'Book removed!'
     return jsonify(response_object)
 
 
