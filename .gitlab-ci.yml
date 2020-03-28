@@ -13,7 +13,7 @@ stages:
 docker-build:
   stage: build
   script:
-    - sudo apk add --no-cache curl
+    - apk add --no-cache curl
     - sudo docker build
         --tag $HEROKU_REGISTRY_IMAGE
         --file ./Dockerfile
