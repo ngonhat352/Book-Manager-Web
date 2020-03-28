@@ -9,7 +9,7 @@
         <br><br>
         <table class="table table-hover">
           <thead>
-            <tr>
+            <tr class="table-primary">
               <th scope="col">Title</th>
               <th scope="col">Author(s)</th>
               <th scope="col">Read?</th>
@@ -18,12 +18,15 @@
           </thead>
           <tbody>
             <tr v-for="(book, index) in books" :key="index">
-              <td>{{ book.title }}</td>
+              <td class="font-weight-bold">{{ book.title }}</td>
               <td>{{ book.author }}</td>
               <td>
-                <span v-if="book.read">Yes</span>
-                <span v-else>No</span>
-              </td>
+                <input type="number" class="form-group form-control w-75"
+                       v-model="book.read">
+                </td>
+                <!-- <span v-if="book.read">Yes</span>
+                <span v-else>No</span> -->
+              <!-- </td> -->
               <td>
                 <div class="btn-group" role="group">
                   <button
@@ -70,12 +73,22 @@
                           required
                           placeholder="Enter author">
             </b-form-input>
-          </b-form-group>
-        <b-form-group id="form-read-group">
+        </b-form-group>
+        <b-form-group id="form-read-group"
+                      label="Pages read:"
+                      label-for="form-read-input">
+            <b-form-input id="form-read-input"
+                          type="number"
+                          v-model="addBookForm.read"
+                          required
+                          placeholder="Enter pages read">
+            </b-form-input>
+        </b-form-group>
+        <!-- <b-form-group id="form-read-group">
           <b-form-checkbox-group v-model="addBookForm.read" id="form-checks">
             <b-form-checkbox value="true">Read?</b-form-checkbox>
           </b-form-checkbox-group>
-        </b-form-group>
+        </b-form-group> -->
         <b-button-group>
           <b-button type="submit" variant="primary">Submit</b-button>
           <b-button type="reset" variant="danger">Reset</b-button>
@@ -107,10 +120,18 @@
                           placeholder="Enter author">
             </b-form-input>
           </b-form-group>
-        <b-form-group id="form-read-edit-group">
-          <b-form-checkbox-group v-model="editForm.read" id="form-checks">
+        <b-form-group id="form-read-edit-group"
+                      label="Pages read:"
+                      label-for="form-read-edit-input">
+            <b-form-input id="form-read-edit-input"
+                          type="number"
+                          v-model="editForm.read"
+                          required
+                          placeholder="Enter pages read">
+            </b-form-input>
+          <!-- <b-form-checkbox-group v-model="editForm.read" id="form-checks">
             <b-form-checkbox value="true">Read?</b-form-checkbox>
-          </b-form-checkbox-group>
+          </b-form-checkbox-group> -->
         </b-form-group>
         <b-button-group>
           <b-button type="submit" variant="primary">Update</b-button>
@@ -132,7 +153,7 @@ export default {
       addBookForm: {
         title: '',
         author: '',
-        read: [],
+        read: '',
       },
       message: '',
       showMessage: false,
@@ -140,7 +161,7 @@ export default {
         id: '',
         title: '',
         author: '',
-        read: [],
+        read: '',
       },
     };
   },
@@ -149,7 +170,7 @@ export default {
   },
   methods: {
     getBooks() {
-      const path = '/books';
+      const path = 'http://localhost:5000/books';
       axios.get(path)
         .then((res) => {
           this.books = res.data.books;
@@ -160,7 +181,7 @@ export default {
         });
     },
     addBook(payload) {
-      const path = '/books';
+      const path = 'http://localhost:5000/books';
       axios.post(path, payload)
         .then(() => {
           this.getBooks();
@@ -176,21 +197,21 @@ export default {
     initForm() {
       this.addBookForm.title = '';
       this.addBookForm.author = '';
-      this.addBookForm.read = [];
+      this.addBookForm.read = '';
       this.editForm.id = '';
       this.editForm.title = '';
       this.editForm.author = '';
-      this.editForm.read = [];
+      this.editForm.read = '';
     },
     onSubmit(evt) {
       evt.preventDefault();
       this.$refs.addBookModal.hide();
-      let read = false;
-      if (this.addBookForm.read[0]) read = true;
+      // let read = false;
+      // if (this.addBookForm.read[0]) read = true;
       const payload = {
         title: this.addBookForm.title,
         author: this.addBookForm.author,
-        read, // property shorthand
+        read: this.addBookForm.read, // property shorthand
       };
       this.addBook(payload);
       this.initForm();
@@ -206,17 +227,17 @@ export default {
     onSubmitUpdate(evt) {
       evt.preventDefault();
       this.$refs.editBookModal.hide();
-      let read = false;
-      if (this.editForm.read[0]) read = true;
+      // let read = false;
+      // if (this.editForm.read[0]) read = true;
       const payload = {
         title: this.editForm.title,
         author: this.editForm.author,
-        read,
+        read: this.editForm.read,
       };
       this.updateBook(payload, this.editForm.id);
     },
     updateBook(payload, bookID) {
-      const path = `/books/${bookID}`;
+      const path = `http://localhost:5000/books/${bookID}`;
       axios.put(path, payload)
         .then(() => {
           this.getBooks();
@@ -236,7 +257,7 @@ export default {
       this.getBooks(); // why?
     },
     removeBook(bookID) {
-      const path = `/books/${bookID}`;
+      const path = `http://localhost:5000/books/${bookID}`;
       axios.delete(path)
         .then(() => {
           this.getBooks();

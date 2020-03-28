@@ -12,6 +12,7 @@ export default new Router({
     {
       path: '/',
       name: 'Books',
+      meta: { title: 'Online Bookmarker!' },
       component: Books,
     },
     // {
