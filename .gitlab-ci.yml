@@ -6,7 +6,7 @@ variables:
   DOCKER_DRIVER: overlay
   HEROKU_APP_NAME: lit-springs-09878
   CACHE_IMAGE: ${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}
-  HEROKU_REGISTRY_IMAGE: registry.heroku.com/${HEROKU_APP_NAME}/web
+
 
 stages:
   - build
