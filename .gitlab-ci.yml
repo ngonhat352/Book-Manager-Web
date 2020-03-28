@@ -13,11 +13,11 @@ stages:
 docker-build:
   stage: build
   script:
-    - apk add --no-cache curl
-    - docker build
+    - sudo apk add --no-cache curl
+    - sudo docker build
         --tag $HEROKU_REGISTRY_IMAGE
         --file ./Dockerfile
         "."
-    - docker login -u _ -p $HEROKU_AUTH_TOKEN registry.heroku.com
-    - docker push $HEROKU_REGISTRY_IMAGE
+    - sudo docker login -u _ -p $HEROKU_AUTH_TOKEN registry.heroku.com
+    - sudo docker push $HEROKU_REGISTRY_IMAGE
     - ./release.sh
